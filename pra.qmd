@@ -1,0 +1,16 @@
+---
+title: "pra"
+format: 
+  html: 
+    toc: true
+    toc-location: right
+    toc-title: "Contents"
+    toc-depth: 6
+    number-sections: true
+    smooth-scroll: true
+editor: visual
+---
+
+## 연습
+
+연습연습
