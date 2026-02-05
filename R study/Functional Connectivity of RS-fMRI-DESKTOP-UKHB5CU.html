@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="ROI BOLD 시간 신호로부터 correlation matrix 계산 및 시각화">
 
 <title>Functional Connectivity of RS-fMRI</title>
 <style>
@@ -71,14 +70,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="Functional Connectivity of RS-fMRI_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Functional Connectivity of RS-fMRI_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Functional Connectivity of RS-fMRI_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#fisher-z-transformation이란" id="toc-fisher-z-transformation이란" class="nav-link active" data-scroll-target="#fisher-z-transformation이란"><span class="header-section-number">1</span> 1-1) Fisher Z Transformation이란</a></li>
+  <li><a href="#수식적-정의" id="toc-수식적-정의" class="nav-link" data-scroll-target="#수식적-정의"><span class="header-section-number">2</span> 1-2) 수식적 정의</a></li>
+  <li><a href="#왜-하는가-언제-하는가" id="toc-왜-하는가-언제-하는가" class="nav-link" data-scroll-target="#왜-하는가-언제-하는가"><span class="header-section-number">3</span> 1-3) 왜 하는가, 언제 하는가</a></li>
+  <li><a href="#rs-fmri-correlation에-적용" id="toc-rs-fmri-correlation에-적용" class="nav-link" data-scroll-target="#rs-fmri-correlation에-적용"><span class="header-section-number">4</span> 1-4) RS-fMRI correlation에 적용</a></li>
+  <li><a href="#correlation-analysis-섹션" id="toc-correlation-analysis-섹션" class="nav-link" data-scroll-target="#correlation-analysis-섹션"><span class="header-section-number">5</span> 2) Correlation Analysis 섹션</a></li>
+  <li><a href="#상관분석-정의와-목적" id="toc-상관분석-정의와-목적" class="nav-link" data-scroll-target="#상관분석-정의와-목적"><span class="header-section-number">6</span> 상관분석 정의와 목적</a></li>
+  <li><a href="#가정-조건" id="toc-가정-조건" class="nav-link" data-scroll-target="#가정-조건"><span class="header-section-number">7</span> 가정 조건</a></li>
+  <li><a href="#데이터프레임-vs-행렬" id="toc-데이터프레임-vs-행렬" class="nav-link" data-scroll-target="#데이터프레임-vs-행렬"><span class="header-section-number">8</span> 데이터프레임 vs 행렬</a></li>
+  <li><a href="#통계적-가설-검정과-p값" id="toc-통계적-가설-검정과-p값" class="nav-link" data-scroll-target="#통계적-가설-검정과-p값"><span class="header-section-number">9</span> 통계적 가설 검정과 p값</a></li>
+  <li><a href="#선형-관계와-p값-해석" id="toc-선형-관계와-p값-해석" class="nav-link" data-scroll-target="#선형-관계와-p값-해석"><span class="header-section-number">10</span> 선형 관계와 p값 해석</a></li>
+  <li><a href="#선형-관계-의미" id="toc-선형-관계-의미" class="nav-link" data-scroll-target="#선형-관계-의미"><span class="header-section-number">11</span> 2-1) 선형 관계 의미</a></li>
+  <li><a href="#p값-의미" id="toc-p값-의미" class="nav-link" data-scroll-target="#p값-의미"><span class="header-section-number">12</span> 2-2) p값 의미</a></li>
+  <li><a href="#데이터프레임-테이블-출력만-따로-출력" id="toc-데이터프레임-테이블-출력만-따로-출력" class="nav-link" data-scroll-target="#데이터프레임-테이블-출력만-따로-출력"><span class="header-section-number">13</span> 6) 데이터프레임 테이블 출력만 따로 출력</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -90,12 +110,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>ROI BOLD 시간 신호로부터 correlation matrix 계산 및 시각화 </p>
-          </div>
-  </div>
     
   
     
@@ -127,24 +141,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<section id="fisher-z-transformation이란" class="level2">
-<h2 class="anchored" data-anchor-id="fisher-z-transformation이란">1-1) Fisher Z Transformation이란</h2>
+<section id="fisher-z-transformation이란" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="fisher-z-transformation이란"><span class="header-section-number">1</span> 1-1) Fisher Z Transformation이란</h2>
 <p>Fisher Z 변환은 Pearson 상관계수 r의 치우친 분포를 정규분포로 변환하는 수학적 변환입니다. 상관계수 r은 [-1,1] 범위에서 비대칭이지만, Z 변환 후 평균 0, 분산 1에 가까운 정규분포를 따릅니다.</p>
 </section>
-<section id="수식적-정의" class="level2">
-<h2 class="anchored" data-anchor-id="수식적-정의">1-2) 수식적 정의</h2>
+<section id="수식적-정의" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="수식적-정의"><span class="header-section-number">2</span> 1-2) 수식적 정의</h2>
 <p>z=12ln⁡(1+r1−r)=tanh⁡−1(r)z=21ln(1−r1+r)=tanh−1(r)<br>
 r = 0일 때 z = 0, r 증가 시 z 급격히 증가 (예: r=0.4 → z≈0.424).</p>
 </section>
-<section id="왜-하는가-언제-하는가" class="level2">
-<h2 class="anchored" data-anchor-id="왜-하는가-언제-하는가">1-3) 왜 하는가, 언제 하는가</h2>
+<section id="왜-하는가-언제-하는가" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="왜-하는가-언제-하는가"><span class="header-section-number">3</span> 1-3) 왜 하는가, 언제 하는가</h2>
 <ul>
 <li><p><strong>왜</strong>: r의 샘플링 분산이 r 값에 의존 (Var(r)=1−r2n−2Var(r)=n−21−r2) → 그룹 비교/통계검정 왜곡. Z 변환 후 분산 안정화 ≈1/n.</p></li>
 <li><p><strong>언제</strong>: RS-fMRI FC 분석에서 그룹 비교(t-test/ANOVA), 메타분석, 신경영상 통계 전.</p></li>
 </ul>
 </section>
-<section id="rs-fmri-correlation에-적용" class="level2">
-<h2 class="anchored" data-anchor-id="rs-fmri-correlation에-적용">1-4) RS-fMRI correlation에 적용</h2>
+<section id="rs-fmri-correlation에-적용" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="rs-fmri-correlation에-적용"><span class="header-section-number">4</span> 1-4) RS-fMRI correlation에 적용</h2>
 <p>기존 corr 행렬에 atanh() 적용 (R 기본 함수).<br>
 </p>
 <div class="cell">
@@ -283,15 +297,15 @@ cor9  ROI2  ROI3           0.001    0.001 9.85e-01 not significant</code></pre>
 </div>
 </div>
 </section>
-<section id="correlation-analysis-섹션" class="level2">
-<h2 class="anchored" data-anchor-id="correlation-analysis-섹션">2) Correlation Analysis 섹션</h2>
+<section id="correlation-analysis-섹션" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="correlation-analysis-섹션"><span class="header-section-number">5</span> 2) Correlation Analysis 섹션</h2>
 </section>
-<section id="상관분석-정의와-목적" class="level2">
-<h2 class="anchored" data-anchor-id="상관분석-정의와-목적">상관분석 정의와 목적</h2>
+<section id="상관분석-정의와-목적" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="상관분석-정의와-목적"><span class="header-section-number">6</span> 상관분석 정의와 목적</h2>
 <p>상관분석은 두 변수 간 선형 관계의 강도와 방향을 측정하는 통계 방법으로, RS-fMRI에서 ROI BOLD 신호 간 기능적 연결성(FC)을 평가할 때 사용합니다.</p>
 </section>
-<section id="가정-조건" class="level2">
-<h2 class="anchored" data-anchor-id="가정-조건">가정 조건</h2>
+<section id="가정-조건" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="가정-조건"><span class="header-section-number">7</span> 가정 조건</h2>
 <ul>
 <li><p>선형성: 변수 간 직선 관계 가정.</p></li>
 <li><p>독립성: 관측치 독립.</p></li>
@@ -299,31 +313,31 @@ cor9  ROI2  ROI3           0.001    0.001 9.85e-01 not significant</code></pre>
 <li><p>정규성: 상관계수 샘플 분포 정규(대표본에서는 약화).​</p></li>
 </ul>
 </section>
-<section id="데이터프레임-vs-행렬" class="level2">
-<h2 class="anchored" data-anchor-id="데이터프레임-vs-행렬">데이터프레임 vs 행렬</h2>
+<section id="데이터프레임-vs-행렬" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="데이터프레임-vs-행렬"><span class="header-section-number">8</span> 데이터프레임 vs 행렬</h2>
 <p>R에서 데이터프레임은 서로 다른 데이터 타입(숫자, 문자, 팩터)을 혼합 저장하는 2차원 구조로 열 이름 지원; 행렬은 단일 타입(numeric)만 저장하며 고속 연산에 최적화됩니다.</p>
 </section>
-<section id="통계적-가설-검정과-p값" class="level2">
-<h2 class="anchored" data-anchor-id="통계적-가설-검정과-p값">통계적 가설 검정과 p값</h2>
+<section id="통계적-가설-검정과-p값" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="통계적-가설-검정과-p값"><span class="header-section-number">9</span> 통계적 가설 검정과 p값</h2>
 <p>가설 검정은 귀무가설(H0: ρ=0, 상관 없음)을 대상으로 대립가설(Ha: ρ≠0)을 검증하는 과정입니다. p값은 H0이 참일 때 관측 결과(또는 더 극단)가 나타날 확률로, p&lt;0.05면 H0 기각(유의).</p>
 </section>
-<section id="선형-관계와-p값-해석" class="level2">
-<h2 class="anchored" data-anchor-id="선형-관계와-p값-해석">선형 관계와 p값 해석</h2>
+<section id="선형-관계와-p값-해석" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="선형-관계와-p값-해석"><span class="header-section-number">10</span> 선형 관계와 p값 해석</h2>
 </section>
-<section id="선형-관계-의미" class="level2">
-<h2 class="anchored" data-anchor-id="선형-관계-의미">2-1) 선형 관계 의미</h2>
+<section id="선형-관계-의미" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="선형-관계-의미"><span class="header-section-number">11</span> 2-1) 선형 관계 의미</h2>
 <p>A와 B ROI BOLD 신호가 직선 형태(y = a + bx)로 동반 변동하는 관계를 의미하며, Pearson r 값 범위 -1(완벽 음선형) ~ +1(완벽 양선형)입니다.​</p>
 </section>
-<section id="p값-의미" class="level2">
-<h2 class="anchored" data-anchor-id="p값-의미">2-2) p값 의미</h2>
+<section id="p값-의미" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="p값-의미"><span class="header-section-number">12</span> 2-2) p값 의미</h2>
 <ul>
 <li><p><strong>p값 작음(&lt;0.05)</strong>: H0(상관 없음) 기각 → ROI 간 유의한 선형 FC 존재.</p></li>
 <li><p><strong>p값 큼(&gt;0.05)</strong>: H0 채택 → 우연으로 볼 수 있는 상관.</p></li>
 <li><p><strong>기준</strong>: α=0.05 (사회과학/신경영상 표준).</p></li>
 </ul>
 </section>
-<section id="데이터프레임-테이블-출력만-따로-출력" class="level2">
-<h2 class="anchored" data-anchor-id="데이터프레임-테이블-출력만-따로-출력">6) 데이터프레임 테이블 출력만 따로 출력</h2>
+<section id="데이터프레임-테이블-출력만-따로-출력" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="데이터프레임-테이블-출력만-따로-출력"><span class="header-section-number">13</span> 6) 데이터프레임 테이블 출력만 따로 출력</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>n_roi <span class="ot">&lt;-</span> <span class="dv">10</span></span>
@@ -821,4 +835,5 @@ cor44  ROI9 ROI10          -0.065   -0.066 3.57e-01 not significant</code></pre>
 
 
 
+<script src="Functional Connectivity of RS-fMRI_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

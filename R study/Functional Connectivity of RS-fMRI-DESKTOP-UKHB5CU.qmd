@@ -1,7 +1,13 @@
 ---
 title: "Functional Connectivity of RS-fMRI"
-author: "ROI BOLD 시간 신호로부터 correlation matrix 계산 및 시각화"
-format: html
+format: 
+  html: 
+    toc: true
+    toc-location: right
+    toc-title: "Contents"
+    toc-depth: 6
+    number-sections: true
+    smooth-scroll: true
 editor: visual
 ---
 
