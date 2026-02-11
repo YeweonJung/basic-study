@@ -7,3 +7,5 @@ file://wsl.localhost/Ubuntu-22.04/home/jyo52622/prof_practice_analysis/DTI_analy
 https://html-preview.github.io/?url=https://github.com/YeweonJung/basic-study/blob/main/R%20study/2026-02-04/2026-02-04_homework.html
 # 4) 2026-02-05
 https://html-preview.github.io/?url=https://github.com/YeweonJung/basic-study/blob/main/R%20study/2026-02-05/2026-02-05_homework.html
+# 5) NM MRI 데이터를 AFNI로 전처리하고, 주요 부위의 ROI를 추출하여 통계 분석(CNR, SNR)과 시각화 작업
+file://wsl.localhost/Ubuntu-22.04/home/jyo52622/prof_practice_analysis/NM_analysis/qc/index.html
