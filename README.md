@@ -13,3 +13,7 @@ file://wsl.localhost/Ubuntu-22.04/home/jyo52622/prof_practice_analysis/NM_analys
 file://wsl.localhost/Ubuntu-22.04/home/jyo52622/prof_practice_analysis/sub-001.rest.results/fMRI_Quality_Analysis_Report.html
 # 7) 2026-02-13 
 https://html-preview.github.io/?url=https://github.com/YeweonJung/basic-study/blob/main/R%20study/2026-02-13/2026-02-13_homework.html
+# 8) MRI 분석 상세 교육 보고서
+https://html-preview.github.io/?url=https://github.com/YeweonJung/basic-study/blob/main/R%20study/EDUCATIONAL_REPORT_20260219_131936.html
+# 9) MRI 종합 분석 보고서
+https://html-preview.github.io/?url=https://github.com/YeweonJung/basic-study/blob/main/R%20study/FINAL_COMPREHENSIVE_REPORT_20260219_130831.html
