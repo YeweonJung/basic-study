@@ -1,0 +1,573 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 MRI 분석 최종 종합 보고서</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        .content {
+            padding: 50px;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .summary-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .summary-card h2 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .summary-card p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .analysis-section {
+            margin: 50px 0;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 6px solid #667eea;
+        }
+        
+        .analysis-section h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .analysis-section h2::before {
+            content: '🔬';
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+        
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .file-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        
+        .file-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .file-item .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .file-item .name {
+            font-size: 0.9em;
+            color: #666;
+            word-wrap: break-word;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .status-complete {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .status-warning {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 30px;
+        }
+        
+        .timeline-item::before {
+            content: '✓';
+            position: absolute;
+            left: -27px;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background: #27ae60;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .timeline-item h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .gallery-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .gallery-item .caption {
+            padding: 20px;
+            background: #f8f9fa;
+            text-align: center;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        
+        .stats-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .stats-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .stats-table tr:hover {
+            background: #f5f5f5;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        footer p {
+            margin: 10px 0;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .highlight h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 MRI 종합 분석 보고서</h1>
+            <p class="subtitle">Comprehensive Neuroimaging Analysis Report</p>
+            <p style="margin-top: 20px; font-size: 1.1em;">
+                생성 일시: 2026년 02월 19일 13:08:31
+            </p>
+        </header>
+        
+        <div class="content">
+            <!-- 전체 요약 -->
+            <div class="highlight">
+                <h3>📊 분석 완료 요약</h3>
+                <p style="font-size: 1.2em; color: #2c3e50;">
+                    <strong>총 7개</strong>의 
+                    분석 카테고리에서 다양한 뇌 영상 분석을 성공적으로 완료하였습니다.
+                </p>
+            </div>
+            
+            <!-- 요약 카드 -->
+            <div class="summary-grid">
+
+                <div class="summary-card">
+                    <h2>11</h2>
+                    <p>DTI</p>
+                    <p style="font-size: 0.9em; opacity: 0.8;">백질 확산 텐서</p>
+                </div>
+
+                <div class="summary-card">
+                    <h2>5</h2>
+                    <p>T1</p>
+                    <p style="font-size: 0.9em; opacity: 0.8;">구조 영상</p>
+                </div>
+
+                <div class="summary-card">
+                    <h2>3</h2>
+                    <p>fMRI #1</p>
+                    <p style="font-size: 0.9em; opacity: 0.8;">기능 영상 1</p>
+                </div>
+
+                <div class="summary-card">
+                    <h2>2</h2>
+                    <p>fMRI #2</p>
+                    <p style="font-size: 0.9em; opacity: 0.8;">기능 영상 2</p>
+                </div>
+
+                <div class="summary-card">
+                    <h2>2</h2>
+                    <p>NM</p>
+                    <p style="font-size: 0.9em; opacity: 0.8;">뉴로멜라닌</p>
+                </div>
+
+                <div class="summary-card">
+                    <h2>1</h2>
+                    <p>연결성</p>
+                    <p style="font-size: 0.9em; opacity: 0.8;">기능 연결성</p>
+                </div>
+
+                <div class="summary-card">
+                    <h2>0</h2>
+                    <p>QC</p>
+                    <p style="font-size: 0.9em; opacity: 0.8;">품질 관리</p>
+                </div>
+
+            </div>
+            
+            <!-- 타임라인 -->
+            <div class="analysis-section">
+                <h2>분석 타임라인</h2>
+                <div class="timeline">
+
+                    <div class="timeline-item">
+                        <h3>DICOM → NIfTI 변환</h3>
+                        <p>모든 원본 DICOM 파일을 NIfTI 형식으로 변환 완료</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>DTI 전처리</h3>
+                        <p>Denoising, Degibbs, Gradient 정규화 완료</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>DTI 메트릭 계산</h3>
+                        <p>FA, MD, AD, RD 맵 생성 완료</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>T1 Brain Extraction</h3>
+                        <p>두개골 제거 및 뇌 조직만 추출 완료</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>fMRI Motion Correction</h3>
+                        <p>머리 움직임 보정 완료 (품질: 우수)</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>기능 연결성 분석</h3>
+                        <p>뇌 영역 간 상호작용 네트워크 분석 완료</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>품질 관리</h3>
+                        <p>모든 데이터 품질 확인 및 시각화 완료</p>
+                    </div>
+
+                </div>
+            </div>
+            
+            <!-- 상세 분석 결과 -->
+            <div class="analysis-section">
+                <h2>상세 분석 결과</h2>
+                
+                <h3 style="color: #667eea; margin-top: 30px;">📁 생성된 파일 통계</h3>
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th>분석 카테고리</th>
+                            <th>NIfTI 파일</th>
+                            <th>시각화 이미지</th>
+                            <th>상태</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td><strong>백질 확산 텐서</strong></td>
+                            <td>11 개</td>
+                            <td>4 개</td>
+                            <td><span class="status-badge status-complete">✓ 완료</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>구조 영상</strong></td>
+                            <td>5 개</td>
+                            <td>0 개</td>
+                            <td><span class="status-badge status-complete">✓ 완료</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>기능 영상 1</strong></td>
+                            <td>3 개</td>
+                            <td>0 개</td>
+                            <td><span class="status-badge status-complete">✓ 완료</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>기능 영상 2</strong></td>
+                            <td>2 개</td>
+                            <td>0 개</td>
+                            <td><span class="status-badge status-complete">✓ 완료</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>뉴로멜라닌</strong></td>
+                            <td>2 개</td>
+                            <td>0 개</td>
+                            <td><span class="status-badge status-complete">✓ 완료</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>기능 연결성</strong></td>
+                            <td>1 개</td>
+                            <td>4 개</td>
+                            <td><span class="status-badge status-complete">✓ 완료</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>품질 관리</strong></td>
+                            <td>0 개</td>
+                            <td>3 개</td>
+                            <td><span class="status-badge status-complete">✓ 완료</span></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- 주요 결과 이미지 -->
+            <div class="analysis-section">
+                <h2>주요 결과 시각화</h2>
+                <div class="image-gallery">
+
+                    <div class="gallery-item">
+                        <img src="QC_final/T1_brain.png" alt="T1 Brain Extraction">
+                        <div class="caption">T1 Brain Extraction</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="QC_final/fMRI_mean.png" alt="fMRI Mean Image">
+                        <div class="caption">fMRI Mean Image</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="QC_final/fMRI_motion.png" alt="fMRI Motion Quality">
+                        <div class="caption">fMRI Motion Quality</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="connectivity_results/connectivity_matrix.png" alt="Connectivity Matrix">
+                        <div class="caption">Connectivity Matrix</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="connectivity_results/network_graph.png" alt="Functional Network">
+                        <div class="caption">Functional Network</div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="connectivity_results/connectivity_histogram.png" alt="Connection Strength Distribution">
+                        <div class="caption">Connection Strength Distribution</div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <!-- 파일 위치 -->
+            <div class="analysis-section">
+                <h2>📂 결과 파일 위치</h2>
+                <div class="file-grid">
+
+                    <div class="file-item">
+                        <div class="icon">📁</div>
+                        <div class="name"><strong>백질 확산 텐서</strong></div>
+                        <div class="name" style="font-size: 0.8em; color: #999;">DTI_integrated_batch</div>
+                    </div>
+
+                    <div class="file-item">
+                        <div class="icon">📁</div>
+                        <div class="name"><strong>구조 영상</strong></div>
+                        <div class="name" style="font-size: 0.8em; color: #999;">T1_analysis</div>
+                    </div>
+
+                    <div class="file-item">
+                        <div class="icon">📁</div>
+                        <div class="name"><strong>기능 영상 1</strong></div>
+                        <div class="name" style="font-size: 0.8em; color: #999;">rsfMRI_1st</div>
+                    </div>
+
+                    <div class="file-item">
+                        <div class="icon">📁</div>
+                        <div class="name"><strong>기능 영상 2</strong></div>
+                        <div class="name" style="font-size: 0.8em; color: #999;">rsfMRI_2nd</div>
+                    </div>
+
+                    <div class="file-item">
+                        <div class="icon">📁</div>
+                        <div class="name"><strong>뉴로멜라닌</strong></div>
+                        <div class="name" style="font-size: 0.8em; color: #999;">Neuromelanin_analysis</div>
+                    </div>
+
+                    <div class="file-item">
+                        <div class="icon">📁</div>
+                        <div class="name"><strong>기능 연결성</strong></div>
+                        <div class="name" style="font-size: 0.8em; color: #999;">connectivity_results</div>
+                    </div>
+
+                    <div class="file-item">
+                        <div class="icon">📁</div>
+                        <div class="name"><strong>품질 관리</strong></div>
+                        <div class="name" style="font-size: 0.8em; color: #999;">QC_final</div>
+                    </div>
+
+                </div>
+                
+                <div style="margin-top: 30px; padding: 20px; background: white; border-radius: 10px;">
+                    <h3 style="color: #667eea;">Windows에서 접근:</h3>
+                    <p style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 5px;">
+                        \\wsl$\Ubuntu-22.04\home\jyo52622\prof_practice_analysis
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 다음 단계 -->
+            <div class="highlight">
+                <h3>🚀 권장 다음 단계</h3>
+                <ul style="margin-top: 15px; line-height: 2;">
+                    <li><strong>통계 분석:</strong> ROI별 DTI 메트릭 추출 및 비교</li>
+                    <li><strong>Tractography:</strong> 백질 섬유 추적 및 시각화</li>
+                    <li><strong>그룹 분석:</strong> 다른 피험자 데이터와 비교 분석</li>
+                    <li><strong>머신러닝:</strong> 연결성 패턴 기반 분류/예측 모델</li>
+                    <li><strong>논문 작성:</strong> 결과 정리 및 시각화 자료 활용</li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <h3 style="margin-bottom: 20px;">MRI Analysis Pipeline</h3>
+            <p>Powered by: dcm2niix, MRtrix3, Nilearn, Python, Bash</p>
+            <p>Generated: 2026-02-19 13:08:31</p>
+            <p style="margin-top: 20px; opacity: 0.8;">
+                Total Analysis Categories: 7 | 
+                Total Files: 35
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
