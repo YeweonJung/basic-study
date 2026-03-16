@@ -1,0 +1,144 @@
+---
+title: "Dataset Analysis"
+format: 
+  html: 
+    toc: true
+    toc-location: right
+    toc-title: "Contents"
+    toc-depth: 6
+    number-sections: true
+    smooth-scroll: true
+editor: visual
+---
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r,eval=FALSE}
+install.packages(c("tidyverse", "DT", "skimr", "corrplot"))
+```
+
+```{r}
+library(corrplot)
+library(survival)
+library(DT)
+```
+
+```{r}
+df <- read.csv("C:/Users/jyo52/OneDrive/Desktop/prof_practice/dataset/dataset-full-z.csv", fileEncoding = "UTF-8-BOM")
+dim(df)
+head(df)
+```
+
+```{r}
+datatable(df, options = list(pageLength = 10, scrollX = TRUE))
+
+```
+
+```{r}
+skim(df)
+```
+
+```{r}
+colSums(is.na(df)) %>%
+  as.data.frame() %>%
+  rename(missing = ".") %>%
+  filter(missing > 0)
+```
+
+```{r,eval=FALSE}
+install.packages("ggplot2")
+```
+
+```{r}
+library(corrplot)
+library(survival)
+library(DT)
+```
+
+```{r}
+df <- read.csv("C:/Users/jyo52/OneDrive/Desktop/prof_practice/dataset/dataset-full-z.csv", fileEncoding = "UTF-8-BOM")
+```
+
+```{r}
+datatable(df, options = list(pageLength = 10, scrollX = TRUE))
+```
+
+```{r}
+skim(df)
+```
+
+```{r}
+colSums(is.na(df)) %>%
+  as.data.frame() %>%
+  rename(missing = ".") %>%
+  filter(missing > 0)
+```
+
+```{r}
+df %>%
+  select(where(is.numeric)) %>%
+  pivot_longer(everything()) %>%
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 30, fill = "steelblue", alpha = 0.7) +
+  facet_wrap(~name, scales = "free") +
+  theme_minimal()
+```
+
+```{r}
+df %>%
+  select(where(is.numeric)) %>%
+  cor(use = "pairwise.complete.obs") %>%
+  corrplot(method = "color", type = "upper",
+           tl.cex = 0.6, tl.col = "black",
+           col = colorRampPalette(c("#2166AC", "white", "#D6604D"))(200))
+```
+
+```{r}
+df %>%
+  mutate(status = as.factor(status)) %>%
+  group_by(status) %>%
+  summarise(across(where(is.numeric), ~mean(.x, na.rm = TRUE))) %>%
+  datatable(options = list(scrollX = TRUE))
+```
+
+```{r,eval=FALSE}
+install.packages(c("survival", "survminer", "ggpubr", "gtsummary"))
+```
+
+```{r}
+surv_obj <- Surv(time = df$time, event = df$status)
+fit <- survfit(surv_obj ~ subg, data = df)
+plot(fit, col = c("#E7B800", "#2E9FDF", "#FC4E07"),
+     xlab = "Time", ylab = "Survival probability",
+     main = "Kaplan-Meier Curve")
+legend("topright", legend = levels(as.factor(df$subg)),
+       col = c("#E7B800", "#2E9FDF", "#FC4E07"), lty = 1)
+```
+
+```{r}
+cox_model <- coxph(Surv(time, status) ~ iq + wcst + gaf + sfs + subg, data = df)
+summary(cox_model)
+```
+
+```{r}
+
+library(corrplot)
+
+vars <- c("iq", "wcst", "tmta", "tmtb", "digit",
+          "p1", "p2", "p3", "p4", "p5",
+          "n1", "n2", "n3", "n4", "n5", "n6",
+          "gaf", "gafd", "sfs")
+
+cor(df[, vars], use = "pairwise.complete.obs") |>
+  corrplot(method = "color", type = "upper",
+           tl.cex = 0.6, tl.col = "black",
+           addCoef.col = "black", number.cex = 0.4,
+           col = colorRampPalette(c("#2166AC", "white", "#D6604D"))(200))
+```
+
+```{r}
+pairs(df[, c("iq", "gaf", "sfs", "n1", "n2", "n3")],
+      col = "steelblue", pch = 19, cex = 0.5)
+```
