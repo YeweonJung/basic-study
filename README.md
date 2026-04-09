@@ -21,3 +21,5 @@ https://html-preview.github.io/?url=https://github.com/YeweonJung/basic-study/bl
 https://html-preview.github.io/?url=https://github.com/YeweonJung/basic-study/blob/main/R%20study/2026.03.13/Homework_2026.03.13.html
 # 11) 2026.04.08 통계 수정
 https://html-preview.github.io/?url=https://github.com/YeweonJung/basic-study/blob/main/R%20study/2026.03.13/Homework_2026.03.13.html
+# 12) 2026.04.19 통계 피드백
+https://html-preview.github.io/?url=https://github.com/YeweonJung/basic-study/blob/main/R%20study/2026.03.13/Homework_2026.03.13.html
