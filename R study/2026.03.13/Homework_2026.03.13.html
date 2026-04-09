@@ -119,6 +119,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#왜-anova에서-f검정을-수행할까" id="toc-왜-anova에서-f검정을-수행할까" class="nav-link" data-scroll-target="#왜-anova에서-f검정을-수행할까"><span class="header-section-number">4.9</span> 왜 ANOVA에서 F검정을 수행할까?</a></li>
   <li><a href="#iris-데이터에서-세-species에-대한-anova-결과-해석" id="toc-iris-데이터에서-세-species에-대한-anova-결과-해석" class="nav-link" data-scroll-target="#iris-데이터에서-세-species에-대한-anova-결과-해석"><span class="header-section-number">4.10</span> iris 데이터에서 세 species에 대한 ANOVA 결과 해석</a></li>
   <li><a href="#의-분석만-하면-틀린-이유" id="toc-의-분석만-하면-틀린-이유" class="nav-link" data-scroll-target="#의-분석만-하면-틀린-이유"><span class="header-section-number">4.11</span> 10)의 분석만 하면 틀린 이유</a></li>
+  <li><a href="#p-value-해석-기준" id="toc-p-value-해석-기준" class="nav-link" data-scroll-target="#p-value-해석-기준"><span class="header-section-number">4.12</span> 11) p-value 해석 기준</a></li>
+  <li><a href="#변수별-분석-방법-선택" id="toc-변수별-분석-방법-선택" class="nav-link" data-scroll-target="#변수별-분석-방법-선택"><span class="header-section-number">4.13</span> 12) 변수별 분석 방법 선택</a></li>
+  <li><a href="#최종-요약" id="toc-최종-요약" class="nav-link" data-scroll-target="#최종-요약"><span class="header-section-number">4.14</span> 13) 최종 요약</a></li>
+  <li><a href="#q-q-plot-해석" id="toc-q-q-plot-해석" class="nav-link" data-scroll-target="#q-q-plot-해석"><span class="header-section-number">4.15</span> 14) Q-Q plot 해석</a></li>
+  <li><a href="#그리고-우리가-anova를-한다고-하면" id="toc-그리고-우리가-anova를-한다고-하면" class="nav-link" data-scroll-target="#그리고-우리가-anova를-한다고-하면"><span class="header-section-number">4.16</span> 15) 그리고 우리가 ANOVA를 한다고 하면,</a></li>
+  <li><a href="#anova용-box-plot-3개-이상-그룹-비교" id="toc-anova용-box-plot-3개-이상-그룹-비교" class="nav-link" data-scroll-target="#anova용-box-plot-3개-이상-그룹-비교"><span class="header-section-number">4.17</span> ANOVA용 Box plot (3개 이상 그룹 비교)</a></li>
+  <li><a href="#t-test용-box-plot-2개-그룹-비교-예시" id="toc-t-test용-box-plot-2개-그룹-비교-예시" class="nav-link" data-scroll-target="#t-test용-box-plot-2개-그룹-비교-예시"><span class="header-section-number">4.18</span> t-test용 Box plot (2개 그룹 비교 예시)</a></li>
+  <li><a href="#box-plot-의미" id="toc-box-plot-의미" class="nav-link" data-scroll-target="#box-plot-의미"><span class="header-section-number">4.19</span> Box plot 의미</a></li>
+  <li><a href="#anova와-연결" id="toc-anova와-연결" class="nav-link" data-scroll-target="#anova와-연결"><span class="header-section-number">4.20</span> ANOVA와 연결</a></li>
+  <li><a href="#t-test와-연결" id="toc-t-test와-연결" class="nav-link" data-scroll-target="#t-test와-연결"><span class="header-section-number">4.21</span> t-test와 연결</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -720,6 +730,128 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <ul>
 <li><p>iris 데이터에 대해 ANOVA의 전제조건을 검정한 결과, Sepal.Width는 정규성과 등분산성을 모두 만족하였으나, Sepal.Length와 Petal.Length는 등분산성이 만족되지 않았고, Petal.Width는 정규성과 등분산성 모두 만족되지 않았음.</p></li>
 <li><p>따라서 모든 변수에 대해 동일하게 ANOVA를 적용하기보다는, 가정 위반이 있는 경우 Welch ANOVA 또는 비모수 검정을 고려하는 것이 더 타당함.</p></li>
+</ul>
+</section>
+<section id="p-value-해석-기준" class="level2" data-number="4.12">
+<h2 data-number="4.12" class="anchored" data-anchor-id="p-value-해석-기준"><span class="header-section-number">4.12</span> 11) p-value 해석 기준</h2>
+<ul>
+<li><strong>정규성 (Shapiro-Wilk)</strong></li>
+</ul>
+<pre><code>-    p \&gt; 0.05 → 정규성 만족
+
+-    p \&lt; 0.05 → 정규성 위반</code></pre>
+<ul>
+<li><strong>등분산성 (Levene / Bartlett)</strong></li>
+</ul>
+<pre><code>-    p \&gt; 0.05 → 등분산성 만족
+
+-    p \&lt; 0.05 → 등분산성 위반</code></pre>
+</section>
+<section id="변수별-분석-방법-선택" class="level2" data-number="4.13">
+<h2 data-number="4.13" class="anchored" data-anchor-id="변수별-분석-방법-선택"><span class="header-section-number">4.13</span> 12) 변수별 분석 방법 선택</h2>
+<ul>
+<li><p><strong>Sepal.Width</strong><br>
+→ 정규성 O / 등분산성 O<br>
+→ <strong>ANOVA 적용</strong></p></li>
+<li><p><strong>Sepal.Length</strong><br>
+→ 정규성 O / 등분산성 X<br>
+→ <strong>Welch ANOVA 적용</strong></p></li>
+<li><p><strong>Petal.Length</strong><br>
+→ 정규성 O / 등분산성 X<br>
+→ <strong>Welch ANOVA 적용</strong></p></li>
+<li><p><strong>Petal.Width</strong><br>
+→ 정규성 X / 등분산성 X<br>
+→ <strong>Kruskal-Wallis 적용</strong></p></li>
+</ul>
+</section>
+<section id="최종-요약" class="level2" data-number="4.14">
+<h2 data-number="4.14" class="anchored" data-anchor-id="최종-요약"><span class="header-section-number">4.14</span> 13) 최종 요약</h2>
+<ul>
+<li><p>Sepal.Width → ANOVA</p></li>
+<li><p>Sepal.Length → Welch ANOVA</p></li>
+<li><p>Petal.Length → Welch ANOVA</p></li>
+<li><p>Petal.Width → Kruskal-Wallis</p></li>
+</ul>
+</section>
+<section id="q-q-plot-해석" class="level2" data-number="4.15">
+<h2 data-number="4.15" class="anchored" data-anchor-id="q-q-plot-해석"><span class="header-section-number">4.15</span> 14) Q-Q plot 해석</h2>
+<ul>
+<li><p>Q-Q plot은 정규분포 적합 여부를 <strong>시각적으로 확인</strong>하는 방법</p></li>
+<li><p>점들이 직선에 가까우면 정규성 만족으로 판단</p></li>
+<li><p>단, 주관적이므로 <strong>최종 판단은 Shapiro-Wilk 검정 사용</strong></p></li>
+</ul>
+</section>
+<section id="그리고-우리가-anova를-한다고-하면" class="level2" data-number="4.16">
+<h2 data-number="4.16" class="anchored" data-anchor-id="그리고-우리가-anova를-한다고-하면"><span class="header-section-number">4.16</span> 15) 그리고 우리가 ANOVA를 한다고 하면,</h2>
+<p>1) 정규성 검정 2) 등분산성 검정 3) ANOVA 검정<br>
+3개를 하는데, 이때 p값을 보정해야 할까요, 안 해야 할까요?</p>
+<ul>
+<li><p>ANOVA는 한 번만 비교하는 거라서 점수(p값)를 따로 고칠 필요 없음</p></li>
+<li><p>정규성 검사, 등분산성 검사는 ANOVA를 해도 되는지 확인단계임.</p></li>
+</ul>
+</section>
+<section id="anova용-box-plot-3개-이상-그룹-비교" class="level2" data-number="4.17">
+<h2 data-number="4.17" class="anchored" data-anchor-id="anova용-box-plot-3개-이상-그룹-비교"><span class="header-section-number">4.17</span> ANOVA용 Box plot (3개 이상 그룹 비교)</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Sepal.Width"</span>, <span class="st">"Petal.Length"</span>, <span class="st">"Petal.Width"</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (v <span class="cf">in</span> vars) {</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxplot</span>(<span class="fu">as.formula</span>(<span class="fu">paste</span>(v, <span class="st">"~ Species"</span>)),</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> iris,</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"Boxplot of"</span>, v),</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">"Species"</span>,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">ylab =</span> v,</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"lightgreen"</span>, <span class="st">"pink"</span>))</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Homework_2026.03.13_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="t-test용-box-plot-2개-그룹-비교-예시" class="level2" data-number="4.18">
+<h2 data-number="4.18" class="anchored" data-anchor-id="t-test용-box-plot-2개-그룹-비교-예시"><span class="header-section-number">4.18</span> t-test용 Box plot (2개 그룹 비교 예시)</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>iris_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(iris, Species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"setosa"</span>, <span class="st">"versicolor"</span>))</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Sepal.Length <span class="sc">~</span> Species,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> iris_sub,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Sepal.Length (setosa vs versicolor)"</span>,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"lightgreen"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Homework_2026.03.13_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="box-plot-의미" class="level2" data-number="4.19">
+<h2 data-number="4.19" class="anchored" data-anchor-id="box-plot-의미"><span class="header-section-number">4.19</span> Box plot 의미</h2>
+<ul>
+<li><p>각 그룹의 <strong>중앙값(median)</strong> 비교 가능</p></li>
+<li><p><strong>분산(퍼짐 정도)</strong> 확인 가능</p></li>
+<li><p><strong>이상치(outlier)</strong> 확인 가능</p></li>
+</ul>
+</section>
+<section id="anova와-연결" class="level2" data-number="4.20">
+<h2 data-number="4.20" class="anchored" data-anchor-id="anova와-연결"><span class="header-section-number">4.20</span> ANOVA와 연결</h2>
+<ul>
+<li>그룹 간 <strong>중앙값 차이</strong>가 보이면<br>
+→ ANOVA에서 유의할 가능성 높음</li>
+</ul>
+</section>
+<section id="t-test와-연결" class="level2" data-number="4.21">
+<h2 data-number="4.21" class="anchored" data-anchor-id="t-test와-연결"><span class="header-section-number">4.21</span> t-test와 연결</h2>
+<ul>
+<li>두 그룹 간 <strong>박스 위치 차이</strong>가 크면<br>
+→ t-test에서 유의할 가능성 높음</li>
 </ul>
 </section>
 </section>
